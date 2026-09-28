@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <title>تسجيل سحب البضاعة</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <main class="app">
+
+    <!-- شاشة كلمة المرور -->
+    <section id="loginScreen" class="card login-card">
+      <div class="lock">🔐</div>
+      <h1>تسجيل سحب البضاعة</h1>
+      <p class="muted">أدخل رمز المستخدم للمتابعة</p>
+
+      <label for="password">رمز المستخدم</label>
+      <input id="password" type="password" inputmode="text"
+             autocomplete="off" maxlength="20"
+             placeholder="">
+
+      <button id="loginBtn" class="btn primary">دخول</button>
+      <div id="loginMsg" class="message"></div>
+    </section>
+
+    <!-- النموذج -->
+    <section id="formScreen" class="hidden">
+
+      <div class="topbar card">
+        <div>
+          <div class="eyebrow">المستخدم</div>
+          <strong id="currentUser">-</strong>
+        </div>
+        <button id="logoutBtn" class="btn small secondary">خروج</button>
+      </div>
+
+      <form id="stockForm" class="card">
+
+        <h2>سحب بضاعة</h2>
+        <p class="muted">اختر الزبون ثم أدخل عدد القطع لكل صنف.</p>
+
+        <label for="customer">اسم الزبون</label>
+        <input id="customer" type="text" required
+               maxlength="100" autocomplete="off"
+               placeholder="مثلاً: Johnny">
+
+        <div class="section-title">
+          <span>🥪</span>
+          <div>
+            <h3>Sandwich</h3>
+            <small>اضغط على الصنف ثم اكتب عدد القطع</small>
+          </div>
+        </div>
+
+        <div id="sandwichItems" class="items-grid"></div>
+
+        <div class="section-title">
+          <span>🍪</span>
+          <div>
+            <h3>Cookies</h3>
+            <small>اضغط على الصنف ثم اكتب عدد القطع</small>
+          </div>
+        </div>
+
+        <div id="cookieItems" class="items-grid"></div>
+
+        <div class="actions">
+          <button type="button" id="displayBtn" class="btn secondary">
+            👁️ عرض التقسيم
+          </button>
+          <button type="submit" id="submitBtn" class="btn primary">
+            ✅ حفظ في Google Sheets
+          </button>
+        </div>
+
+        <div id="formMsg" class="message"></div>
+
+        <div class="hint">
+          <b>مثال:</b> إذا كتبت 40 قطعة Red، سيظهر:
+          <span>40 قطعة = 2 علبة + 4 قطع</span>
+        </div>
+      </form>
+
+      <div id="resultCard" class="card hidden">
+        <h3>📋 ملخص العملية</h3>
+        <div id="result"></div>
+      </div>
+
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
