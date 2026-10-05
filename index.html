@@ -1,97 +1,397 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="robots" content="noindex, nofollow, noarchive">
-  <title>تسجيل سحب البضاعة</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+  />
+
+  <title>Stock Withdrawal</title>
+
+  <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
 
-  <main class="app">
+  <!-- =========================
+       LOGIN
+  ========================== -->
+  <section id="loginScreen" class="screen">
+    <div class="card login-card">
+      <h1>سحب البضاعة</h1>
+      <p class="subtitle">تسجيل الدخول</p>
 
-    <!-- شاشة كلمة المرور -->
-    <section id="loginScreen" class="card login-card">
-      <div class="lock">🔐</div>
-      <h1>تسجيل سحب البضاعة</h1>
-      <p class="muted">أدخل رمز المستخدم للمتابعة</p>
+      <label for="password">كلمة المرور</label>
+      <input
+        id="password"
+        type="password"
+        autocomplete="current-password"
+        placeholder="أدخل كلمة المرور"
+      />
 
-      <label for="password">رمز المستخدم</label>
-      <input id="password" type="password" inputmode="text"
-             autocomplete="off" maxlength="20"
-             placeholder="">
+      <button id="loginBtn" type="button" class="btn primary">
+        دخول
+      </button>
 
-      <button id="loginBtn" class="btn primary">دخول</button>
       <div id="loginMsg" class="message"></div>
-    </section>
+    </div>
+  </section>
 
-    <!-- النموذج -->
-    <section id="formScreen" class="hidden">
 
-      <div class="topbar card">
-        <div>
-          <div class="eyebrow">المستخدم</div>
-          <strong id="currentUser">-</strong>
-        </div>
-        <button id="logoutBtn" class="btn small secondary">خروج</button>
+  <!-- =========================
+       MENU
+  ========================== -->
+  <section id="menuScreen" class="screen hidden">
+
+    <div class="card topbar">
+      <div>
+        <span>المستخدم:</span>
+        <strong id="menuUser">-</strong>
       </div>
 
-      <form id="stockForm" class="card">
+      <button id="menuLogoutBtn" type="button" class="btn danger">
+        تسجيل خروج
+      </button>
+    </div>
 
-        <h2>سحب بضاعة</h2>
-        <p class="muted">اختر الزبون ثم أدخل عدد القطع لكل صنف.</p>
+    <div class="card menu-card">
+
+      <h2>القائمة الرئيسية</h2>
+
+      <button id="addNewBtn" type="button" class="menu-btn">
+        ➕ إضافة سحب جديد
+      </button>
+
+      <button id="fastPasteBtn" type="button" class="menu-btn">
+        ⚡ إدخال سريع
+      </button>
+
+      <button id="reviewBtn" type="button" class="menu-btn">
+        📋 مراجعة السحوبات
+      </button>
+
+      <button id="reportBtn" type="button" class="menu-btn">
+        📊 التقرير
+      </button>
+
+    </div>
+  </section>
+
+
+  <!-- =========================
+       NORMAL FORM
+  ========================== -->
+  <section id="formScreen" class="screen hidden">
+
+    <div class="card topbar">
+      <div>
+        <span>المستخدم:</span>
+        <strong id="currentUser">-</strong>
+      </div>
+
+      <div class="topbar-actions">
+        <button id="backFromFormBtn" type="button" class="btn secondary">
+          رجوع
+        </button>
+
+        <button id="logoutBtn" type="button" class="btn danger">
+          خروج
+        </button>
+      </div>
+    </div>
+
+    <div class="card">
+
+      <h2>إضافة سحب جديد</h2>
+
+      <form id="stockForm">
 
         <label for="customer">اسم الزبون</label>
-        <input id="customer" type="text" required
-               maxlength="100" autocomplete="off"
-               placeholder="مثلاً: Johnny">
 
-        <div class="section-title">
-          <span>🥪</span>
-          <div>
-            <h3>Sandwich</h3>
-            <small>اضغط على الصنف ثم اكتب عدد القطع</small>
-          </div>
-        </div>
+        <input
+          id="customer"
+          type="text"
+          autocomplete="off"
+          placeholder="اسم الزبون"
+          required
+        />
+
+        <h3>السندويش</h3>
 
         <div id="sandwichItems" class="items-grid"></div>
 
-        <div class="section-title">
-          <span>🍪</span>
-          <div>
-            <h3>Cookies</h3>
-            <small>اضغط على الصنف ثم اكتب عدد القطع</small>
-          </div>
-        </div>
+        <h3>الكوكيز</h3>
 
         <div id="cookieItems" class="items-grid"></div>
 
-        <div class="actions">
-          <button type="button" id="displayBtn" class="btn secondary">
-            👁️ عرض التقسيم
+        <div class="form-actions">
+
+          <button
+            id="displayBtn"
+            type="button"
+            class="btn secondary"
+          >
+            معاينة
           </button>
-          <button type="submit" id="submitBtn" class="btn primary">
-            ✅ حفظ في Google Sheets
+
+          <button
+            id="submitBtn"
+            type="submit"
+            class="btn primary"
+          >
+            حفظ السحب
           </button>
+
         </div>
 
         <div id="formMsg" class="message"></div>
 
-        <div class="hint">
-          <b>مثال:</b> إذا كتبت 40 قطعة Red، سيظهر:
-          <span>40 قطعة = 2 علبة + 4 قطع</span>
-        </div>
       </form>
 
-      <div id="resultCard" class="card hidden">
-        <h3>📋 ملخص العملية</h3>
+      <div id="resultCard" class="result-card hidden">
+        <h3>النتيجة</h3>
         <div id="result"></div>
       </div>
 
-    </section>
-  </main>
+    </div>
+  </section>
+
+
+  <!-- =========================
+       FAST PASTE
+  ========================== -->
+  <section id="fastPasteScreen" class="screen hidden">
+
+    <div class="card topbar">
+
+      <div>
+        <span>المستخدم:</span>
+        <strong id="fastPasteUser">-</strong>
+      </div>
+
+      <div class="topbar-actions">
+
+        <button
+          id="backFromFastPasteBtn"
+          type="button"
+          class="btn secondary"
+        >
+          رجوع
+        </button>
+
+        <button
+          id="fastPasteLogoutBtn"
+          type="button"
+          class="btn danger"
+        >
+          خروج
+        </button>
+
+      </div>
+
+    </div>
+
+    <div class="card">
+
+      <h2>إدخال سريع</h2>
+
+      <form id="fastPasteForm">
+
+        <label for="fastCustomer">اسم الزبون</label>
+
+        <input
+          id="fastCustomer"
+          type="text"
+          autocomplete="off"
+          placeholder="اسم الزبون"
+          required
+        />
+
+        <label for="fastOrderText">
+          الصق الطلب هنا
+        </label>
+
+        <textarea
+          id="fastOrderText"
+          rows="12"
+          placeholder="مثال:
+Red 24
+Cheese 48
+Chocolate 24
+Cookies Vanilla 2"
+        ></textarea>
+
+        <div class="form-actions">
+
+          <button
+            id="parseFastBtn"
+            type="button"
+            class="btn secondary"
+          >
+            تحليل
+          </button>
+
+          <button
+            id="saveFastBtn"
+            type="submit"
+            class="btn primary"
+          >
+            حفظ
+          </button>
+
+        </div>
+
+        <div id="fastMsg" class="message"></div>
+
+      </form>
+
+      <div id="fastPreviewCard" class="result-card hidden">
+
+        <h3>المعاينة</h3>
+
+        <div id="fastPreview"></div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- =========================
+       REPORT
+  ========================== -->
+  <section id="reportScreen" class="screen hidden">
+
+    <div class="card topbar report-no-print">
+
+      <div>
+        <span>المستخدم:</span>
+        <strong id="reportUser">-</strong>
+      </div>
+
+      <div class="topbar-actions">
+
+        <button
+          id="backFromReportBtn"
+          type="button"
+          class="btn secondary"
+        >
+          رجوع
+        </button>
+
+        <button
+          id="reportLogoutBtn"
+          type="button"
+          class="btn danger"
+        >
+          خروج
+        </button>
+
+      </div>
+
+    </div>
+
+    <div class="card report-card">
+
+      <div class="report-toolbar report-no-print">
+
+        <div>
+          <h2>تقرير سحب البضاعة</h2>
+          <p class="report-help">
+            يمكنك تحريك الجدول يميناً ويساراً على الهاتف.
+          </p>
+        </div>
+
+        <div class="report-actions">
+
+          <button
+            id="downloadReportBtn"
+            type="button"
+            class="btn primary"
+          >
+            📥 تحميل PDF
+          </button>
+
+          <button
+            id="printReportBtn"
+            type="button"
+            class="btn secondary"
+          >
+            🖨️ طباعة
+          </button>
+
+        </div>
+
+      </div>
+
+      <div id="reportMsg" class="message report-no-print"></div>
+
+      <div id="reportContent" class="report-content"></div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       REVIEW
+  ========================== -->
+  <section id="reviewScreen" class="screen hidden">
+
+    <div class="card topbar">
+
+      <div>
+        <span>المستخدم:</span>
+        <strong id="reviewUser">-</strong>
+      </div>
+
+      <div class="topbar-actions">
+
+        <button
+          id="backFromReviewBtn"
+          type="button"
+          class="btn secondary"
+        >
+          رجوع
+        </button>
+
+        <button
+          id="reviewLogoutBtn"
+          type="button"
+          class="btn danger"
+        >
+          خروج
+        </button>
+
+      </div>
+
+    </div>
+
+    <div class="card">
+
+      <h2>مراجعة السحوبات</h2>
+
+      <input
+        id="customerSearch"
+        type="text"
+        placeholder="ابحث باسم الزبون..."
+        autocomplete="off"
+      />
+
+      <div id="reviewMsg" class="message"></div>
+
+      <div id="reviewList"></div>
+
+    </div>
+
+  </section>
+
+
+  <!-- html2pdf -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
   <script src="script.js"></script>
+
 </body>
 </html>
